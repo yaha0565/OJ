@@ -1,0 +1,17 @@
+# 前端
+XDOJFE/node_modules/
+XDOJFE/dist/
+XDOJFE/.env
+
+# 后端
+XDOJ/build/
+XDOJ/*.o
+XDOJ/xdoj
+XDOJ/.env
+
+# 通用
+*.log
+.DS_Store
+.vscode/
+.idea/
+redis-plus-plus/
