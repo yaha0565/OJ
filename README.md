@@ -210,20 +210,9 @@ server {
 
 欢迎提交 Issue 和 Pull Request！
 
-1. Fork 本仓库
-2. 创建 Feature Branch (`git checkout -b feature/xxx`)
-3. 提交更改 (`git commit -m 'feat: add xxx'`)
-4. 推送分支 (`git push origin feature/xxx`)
-5. 创建 Pull Request
-
----
-
-## 📄 License
-
-本项目基于 [MIT](LICENSE) 协议开源。
-
 ---
 
 <p align="center">
   Powered by XDOJ Team
 </p>
+<p>该README由AI生产</p>
