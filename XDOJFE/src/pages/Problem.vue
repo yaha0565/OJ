@@ -1,14 +1,18 @@
 <template>
     <el-card class="box-card">
-        <center>
-            <h1>{{ data.problemid }}.{{ data.title }}</h1>
-        </center>
+        <div class="problem-header">
+            <span class="problem-id">{{ data.problemid }}</span>
+            <h1 class="problem-title">{{ data.title }}</h1>
+        </div>
         <el-row>
             <el-col :span="20">
-                <div class="content">
-                    <v-md-preview :text="data.content"></v-md-preview>
+                <div class="statement-card">
+                    <div class="statement-card-header">题目描述</div>
+                    <div class="content">
+                        <v-md-preview :text="data.content"></v-md-preview>
+                    </div>
                 </div>
-                <div :style="{boxShadow: `var(--el-box-shadow)`}">
+                <div class="editor-wrapper">
                     <MonacoEditor ref="monacoeditor" :ProblemId=$route.query.ProblemId></MonacoEditor>
                 </div>
                 <br>
@@ -46,8 +50,8 @@
                 </div>
                 <br>
                 <el-button type="primary" @click="ClickStatusRecord">提交记录</el-button>
-                <el-button type="primary" @click="ClickSolution">题解</el-button>
-                <el-button type="primary" @click="ClickDiscuss">讨论</el-button>
+                <el-button @click="ClickSolution">题解</el-button>
+                <el-button @click="ClickDiscuss">讨论</el-button>
             </el-col>
         </el-row>
     </el-card>
@@ -99,7 +103,7 @@ function GetProblem() {
             }else{
                 console.log('出错啦！')
             }
-            
+
         },
         (error) => {
             console.log("请求失败了！！！");
@@ -125,7 +129,7 @@ function SubmitCode() {
     result.value = 0
 
     service
-    .post(`/api/problemcode`, { 
+    .post(`/api/problemcode`, {
         ProblemId: data.problemid,
         UserId:store.state.UserId,
         UserNickName:store.state.NickName,
@@ -208,9 +212,51 @@ onMounted(()=>{
 
 <style scoped>
 .content{
-    width: 1200px
+    width: 100%;
 }
 .box-card{
     margin: 10px;
+}
+.problem-header{
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-bottom: 1px solid var(--luogu-border);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+.problem-id{
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--el-color-primary);
+}
+.problem-title{
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    color: #303133;
+}
+.statement-card{
+    border: 1px solid var(--luogu-border);
+    border-radius: var(--luogu-card-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #ffffff;
+}
+.statement-card-header{
+    background: #fafafa;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: #303133;
+    border-bottom: 1px solid var(--luogu-border);
+}
+.statement-card .content{
+    padding: 16px;
+}
+.editor-wrapper{
+    border: 1px solid var(--luogu-border);
+    border-radius: var(--luogu-card-radius);
+    overflow: hidden;
+    background: #ffffff;
 }
 </style>

@@ -1,0 +1,71 @@
+/* ===================== 洛谷风格主题 =====================
+   去除 Element Plus 默认蓝色主题，改为浅灰/白基底 + 蓝/绿强调色 */
+
+:root {
+	/* 主色：洛谷蓝（!important 防止被后加载的 Element Plus 默认主题覆盖） */
+	--el-color-primary: #3498db !important;
+	--el-color-primary-light-3: #71b7e6 !important;
+	--el-color-primary-light-5: #99cbed !important;
+	--el-color-primary-light-7: #c2e0f4 !important;
+	--el-color-primary-light-8: #d6eaf8 !important;
+	--el-color-primary-light-9: #ebf5fb !important;
+	--el-color-primary-dark-2: #2a7aaf !important;
+
+	/* 强调色：洛谷绿 */
+	--luogu-green: #52c41a;
+	--luogu-bg: #f5f6f7;
+	--luogu-border: #ebedf0;
+	--luogu-card-radius: 8px;
+}
+
+/* 重置 Vue 模板默认的居中 / 暗色逻辑，改为洛谷浅色基底 */
+body {
+	display: block !important;
+	background-color: var(--luogu-bg) !important;
+	color: #303133;
+}
+
+#app {
+	max-width: 100% !important;
+	width: 100%;
+}
+
+/* 卡片统一为洛谷风格：白底、圆角、浅分隔线、轻阴影 */
+.el-card {
+	border-radius: var(--luogu-card-radius) !important;
+	border: 1px solid var(--luogu-border) !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+	--el-card-padding: 16px;
+}
+
+.el-card__header {
+	border-bottom: 1px solid var(--luogu-border) !important;
+}
+
+/* 表格：浅色表头 + 清晰分隔线 */
+.el-table th.el-table__cell {
+	background-color: #fafafa !important;
+	color: #606266;
+	font-weight: 500;
+}
+
+.el-table {
+	--el-table-border-color: var(--luogu-border);
+}
+
+/* 按钮圆角与描边更柔和 */
+.el-button {
+	border-radius: 6px;
+}
+
+/* 菜单激活态：洛谷蓝高亮 */
+.el-menu-item.is-active {
+	color: var(--el-color-primary) !important;
+}
+
+/* 链接悬停去掉 Vue 模板默认的绿色背景 */
+@media (hover: hover) {
+	a:hover {
+		background-color: transparent;
+	}
+}

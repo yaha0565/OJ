@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import store from './store'
 // -------------------------
 import './assets/main.css'
+import './assets/luogu-theme.css'
 // ---------- 路由 ----------
 import router from './router'
 // ---------- markdown ----------

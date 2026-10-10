@@ -7,19 +7,26 @@
                 @cell-click="problemclick"
                 @cell-mouse-enter="changepiechart"
                 >
-                <el-table-column label="状态" width="100">
+                <el-table-column label="状态" width="70">
                     <template #default="scope">
                         <el-icon v-if="store.state.Solves.includes(scope.row.ProblemId)" >
                             <Check />
                         </el-icon>
                     </template>
                 </el-table-column>
-                <el-table-column prop="ProblemId" label="ID" width="50" />
-                <el-table-column prop="Title" label="题目" width="300" />
+                <el-table-column prop="ProblemId" label="题号" width="80" />
+                <el-table-column prop="Title" label="题目" min-width="240" />
+                <el-table-column label="难度" width="130">
+                    <template #default="scope">
+                        <span class="diff-tag" :style="{ backgroundColor: difficultyOf(scope.row).color }">
+                            {{ difficultyOf(scope.row).label }}
+                        </span>
+                    </template>
+                </el-table-column>
                 <el-table-column
                     prop="Tags"
                     label="标签"
-                    width="400"
+                    min-width="260"
                     >
                     <template #default="scope">
                         <el-tag
@@ -30,8 +37,11 @@
                         >{{ name }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="ACNum" label="通过次数" width="100"/>
-                <el-table-column prop="SubmitNum" label="提交次数" width="100"/>
+                <el-table-column label="通过率" width="100">
+                    <template #default="scope">
+                        <span class="pass-rate">{{ passRateOf(scope.row) }}</span>
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="demo-pagination-block">
                 <el-pagination
@@ -69,6 +79,7 @@ import { useRouter} from 'vue-router'
 import PieChart from '../components/Chart/PieChart.vue'
 import ProblemSearch from '../components/Problem/ProblemSearch.vue'
 import TagsButton from '../components/Problem/TagsButton.vue'
+import { getDifficulty, getDifficultyColor } from '../utils/difficulty'
 
 const router = useRouter()
 
@@ -120,6 +131,20 @@ function GetProblemSetInfo(){
         }
     )
 }
+
+// 计算难度（洛谷色阶）
+function difficultyOf(row){
+    const d = getDifficulty(row.Tags, row.ACNum, row.SubmitNum)
+    return { label: d.label, color: getDifficultyColor(d.level) }
+}
+
+// 计算通过率
+function passRateOf(row){
+    const submit = Number(row.SubmitNum)
+    if(!submit) return '0%'
+    return ((Number(row.ACNum) / submit) * 100).toFixed(1) + '%'
+}
+
 // 子组件的搜索按钮调用父组件的方法
 function SearchProblemSet()
 {
@@ -153,7 +178,7 @@ function changepiechart(row, column, cell, event){
 onMounted(()=>{
     GetProblemSetInfo()
 })
-        
+
 </script>
 
 <style scoped>
@@ -168,5 +193,17 @@ onMounted(()=>{
 }
 .box-card{
     margin: 10px;
+}
+.diff-tag{
+    display: inline-block;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    line-height: 20px;
+}
+.pass-rate{
+    color: #303133;
+    font-weight: 500;
 }
 </style>
